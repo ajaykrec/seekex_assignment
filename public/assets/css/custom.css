@@ -1,0 +1,13 @@
+.wrapp {
+    padding: 25px;
+}
+
+form .error {
+    border: 1px solid red !important;
+}
+
+form span.err {
+    color: red !important;
+    text-align: left !important;
+    font-size: 14px !important;
+}
