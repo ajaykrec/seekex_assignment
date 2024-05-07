@@ -52,9 +52,12 @@ class HomeController extends Controller
         $q->leftJoin('balls', 'balls.ball_id', '=', 'carts.ball_id');       
         $q->select('buckets.bucket_id','buckets.name','buckets.volume');
         $q->addSelect(DB::raw('sum(carts.quantity * balls.volume) as filled_space'));
+        $q->addSelect(DB::raw('(buckets.volume - COALESCE(sum(carts.quantity * balls.volume),0)) as empty_space'));
         $q->groupBy("buckets.bucket_id");  
+        $q->orderBy("empty_space",'desc');  
         $buckets = $q->get()->toArray(); 
         $buckets = json_decode(json_encode($buckets), true);
+        
 
         $total_ball_volume = 0;
         foreach($quantityArr as $key=>$val){           
